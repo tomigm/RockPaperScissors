@@ -1,0 +1,19 @@
+button {
+    background-color: rgb(124, 134, 134);
+    border: none;
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding: 15px 25px;       
+    margin: 4px 2px; 
+    font-size: 10px;
+    transition-duration: 1s;
+    cursor: pointer;
+    border-radius: 12px;  
+}
+
+button:hover {
+    background-color: coral;
+    color: white;
+}
