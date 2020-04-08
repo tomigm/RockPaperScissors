@@ -1,121 +1,106 @@
+let computerScore = 0;
+let playerScore = 0;
+let playerSelection
+let computerSelection; 
 
-let playerSelection = '';
-let computerSelection = ''; 
-let computerWin = 0;
-let playerWin = 0;
-let para = document.getElementById('player');
-let computer = document.getElementById('computer');
-        
+// We select button tag and group them in const buttons
 
-function playerPlay () {
-   
-   playerSelection =   (prompt('Write your choice\nROCK - PAPER - SCISSORS')).toUpperCase();
-    if (playerSelection == 'ROCK' || playerSelection == 'SCISSORS' || playerSelection == 'PAPER' ) {
-        return playerSelection;
+const buttons = document.querySelectorAll ('button') ;
+
+
+// ForEach button --> an eventListener is applied with each (click). The called element (e = button) takes the value of the clicked button
+// and returns = 1) User selection printed in document 2) executes playRound 3&4) prints scores in document 5) runs game () 
+
+
+buttons.forEach ((button) => {
+    button.addEventListener ('click', (e) => {
+        playerSel.textContent = `${button.value}` ;
+        playRound (button.value, computerPlay(3));
+        playerRes.textContent = `${playerScore}`;
+        computerRes.textContent = `${computerScore}`;
+        game ();
         
-    } 
-    else {
-        return restart ();
-    }
-}
+    })
+})
+
+// It generates a random number with a floor of 3 (from function call) and return a value assigned to each number
 
 function computerPlay (random) {
 
-let result = Math.floor(Math.random() * Math.floor(random));
-computerSelection = ( result === 0 ) ? 'ROCK' :
-( result === 1 ) ? 'PAPER' :
-( result === 2 ) ? 'SCISSORS' :
-'NaN' ;
-alert (`Computer choose = ${computerSelection}`) ;
-return computerSelection;
+    let result = Math.floor(Math.random() * Math.floor(random));
+    computerSelection = ( result === 0 ) ? 'ROCK' :
+    ( result === 1 ) ? 'PAPER' :
+    ( result === 2 ) ? 'SCISSORS' :
+    'NaN' ;
+    computerSel.textContent = `${computerSelection}` ;
+    return computerSelection;
 
 }
 
-function restart () {
-    alert ('INVALID INPUT!\nchoose between ROCK - PAPER - SCISSORS');
-    return console.log (playerPlay());
-}
+// It evaluates all the variables and combination of games and a) increase player/computer score b) prints round winner in document
 
 function playRound (playerSelection, computerSelection) {
 
     if (playerSelection === 'ROCK' && computerSelection === 'SCISSORS') {
-        ++playerWin;
-        return alert ('You won! ROCK beats SCISSORS');
+        ++playerScore;
+        return gameRes.textContent = 'You won! ROCK beats SCISSORS';
 
     }
     else if (playerSelection === 'SCISSORS' && computerSelection === 'ROCK') {
-        ++computerWin;
-        return alert ('You Lose! ROCK beats SCISSORS');
+        ++computerScore;
+        return gameRes.textContent = 'You Lose! ROCK beats SCISSORS';
     }
     else {
         if (playerSelection === 'SCISSORS' && computerSelection === 'PAPER') {
-            ++playerWin;
-            return alert ('You won! SCISSORS beats PAPER');
+            ++playerScore;
+            return gameRes.textContent = 'You won! SCISSORS beats PAPER';
         }
         else if (playerSelection === 'PAPER' && computerSelection === 'SCISSORS') {
-            ++computerWin;
-            return alert ('You Lose! SCISSORS beats PAPER');
+            ++computerScore;
+            return gameRes.textContent = 'You Lose! SCISSORS beats PAPER';
         }
         
         else {
             if (playerSelection === 'PAPER' && computerSelection === 'ROCK') {
-                ++playerWin;
-                return alert ('You won! PAPER beats ROCK');
+                ++playerScore;
+                return gameRes.textContent = 'You won! PAPER beats ROCK';
             }
             else if (playerSelection === 'ROCK' && computerSelection === 'PAPER') {
-                ++computerWin;
-                return alert ('You Lose! PAPER beats ROCK');
+                ++computerScore;
+                return gameRes.textContent = 'You Lose! PAPER beats ROCK';
             }
             else {
-                return alert (`It's a tie! \ ${playerSelection} = ${computerSelection}`);
+                return gameRes.textContent = `It's a tie! \ ${playerSelection} = ${computerSelection}`;
             
             }
             }
         }
+        
 
 }
 
-    /*
-    if (playerSelection == computerSelection) {
-        alert (`you played ${playerSelection} and machine played ${computerSelection} \ It's a TIE!`)
+// It evaluate the current round and limits it to the best of five
 
-    }
-    */
-
-function startGame() {
-        
-        console.log (`You choose = ${playerPlay()}`);
-        console.log (`Computer choose = ${computerPlay(3)}`);
-        console.log (playRound(playerSelection, computerSelection));
-        console.log (`YOUR SCORE = ${playerWin}`);
-        console.log (`COMPUTER SCORE = ${computerWin}`);
-        para.textContent = `PLAYER SCORE = ${playerWin}`;
-        computer.textContent = `COMPUTER SCORE = ${computerWin}`;
-        return game();
-        
-}
-    
 function game() {
-    if (playerWin == 3 || computerWin == 3) {
-
-        
-        if (playerWin > computerWin) {
-        alert ("YOU WIN!");
+    if (playerScore == 5 || computerScore == 5) {
+    
+            
+        if (playerScore > computerScore) {
+            finalRes.textContent = "YOU WIN!";
+            playerScore = 0;
+            computerScore= 0;
         }
         else {
-        alert ('COMPUTER WINS');
+            finalRes.textContent = 'COMPUTER WINS';
+            playerScore = 0;
+            computerScore= 0;
         }
     }
-    
-    else if (playerWin < 3 && computerWin < 3) {
-        startGame();
+        
+    else if (playerScore < 5 && computerScore < 5) {
+        finalRes.textContent = ''
+        return;
     }
-
-    else if (playerWin > computerWin) {
-        alert ("YOU WIN!");
-    }
-    else {
-        alert ('COMPUTER WINS');
-    }
-    
+   
 }
+
